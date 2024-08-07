@@ -11,7 +11,7 @@ const client = generateClient<Schema>();
 
 
 function createPost(postContent:any) {
-  client.models.Todo.create(postContent);
+  client.models.Post.create(postContent);
 }
 
 
