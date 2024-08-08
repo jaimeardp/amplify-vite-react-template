@@ -1,6 +1,6 @@
 // create compoent simple of react using typescript tsx
 
-import React from 'react';
+// import React from 'react';
 
 // import { WithContext as ReactTags, KEYS, SEPARATORS } from 'react-tag-input';
 
