@@ -103,7 +103,7 @@ const GenPostCompoenent = () => {
           console.log(tags);
 
           const result = await uploadData({
-            path: "album/2024/1.jpg",
+            path: "1.jpg",
             // Alternatively, path: ({identityId}) => `album/${identityId}/1.jpg`
             data: fileImage? fileImage : new File([""], "filename"),
           }).result;
