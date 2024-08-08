@@ -86,9 +86,9 @@ const GenPostCompoenent = () => {
 
   // Upload
 
-  const handleChange = (event: any) => {
-    setFile(event.target.files[0]);
-  };
+  // const handleChange = (event: any) => {
+  //   setFile(event.target.files[0]);
+  // };
 
 
   return (
@@ -101,13 +101,13 @@ const GenPostCompoenent = () => {
           console.log(values);
           console.log(tags);
 
-          // const result = await uploadData({
-          //   path: "album/2024/1.jpg",
-          //   // Alternatively, path: ({identityId}) => `album/${identityId}/1.jpg`
-          //   data: fileImage? fileImage : new File([""], "filename"),
-          // }).result;
+          const result = await uploadData({
+            path: "album/2024/1.jpg",
+            // Alternatively, path: ({identityId}) => `album/${identityId}/1.jpg`
+            data: fileImage? fileImage : new File([""], "filename"),
+          }).result;
 
-          // console.log('Succeeded: ', result);
+          console.log('Succeeded: ', result);
 
           values.tags = tags;
             
