@@ -6,8 +6,9 @@ import 'react-quill/dist/quill.snow.css'; // import styles
 // import { StorageManager } from '@aws-amplify/ui-react-storage';
 import '@aws-amplify/ui-react/styles.css';
 
-import type { Schema } from "../amplify/data/resource";
-import { generateClient } from "aws-amplify/data";
+// import type { Schema } from "../amplify/data/resource";
+// import { generateClient } from "aws-amplify/data";
+
 import { uploadData } from 'aws-amplify/storage';
 
 
@@ -31,7 +32,7 @@ import { uploadData } from 'aws-amplify/storage';
 
 import TagInputComponent from "./TagInputComponent";
 
-const client = generateClient<Schema>();
+// const client = generateClient<Schema>();
 
 // Define the Tag interface
 interface Tag {
@@ -40,28 +41,28 @@ interface Tag {
   className: string;
 }
 
-interface FormValues {
-  title: string;
-  content: string;
-  file?: File;
-  tags: Tag[];
-}
+// interface FormValues {
+//   title: string;
+//   content: string;
+//   file?: File;
+//   tags: Tag[];
+// }
 
-interface LanndingImage {
-  name: string;
-  file: File;
-}
+// interface LanndingImage {
+//   name: string;
+//   file: File;
+// }
 
 
-const createPost = async (postContent: FormValues) => {
-  try {
-    console.log(postContent);
-    // const res = await client.models.Post.create(postContent);
-    // console.log(res);
-  } catch (error) {
-    console.error('Error creating post:', error);
-  }
-};
+// const createPost = async (postContent: FormValues) => {
+//   try {
+//     console.log(postContent);
+//     // const res = await client.models.Post.create(postContent);
+//     // console.log(res);
+//   } catch (error) {
+//     console.error('Error creating post:', error);
+//   }
+// };
 
 
 const GenPostCompoenent = () => {
