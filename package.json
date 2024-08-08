@@ -11,7 +11,11 @@
   },
   "dependencies": {
     "@aws-amplify/ui-react": "^6.1.13",
-    "aws-amplify": "^6.4.0",
+    "@aws-amplify/ui-react-storage": "^3.1.6",
+    "@emotion/react": "^11.13.0",
+    "@emotion/styled": "^11.13.0",
+    "@mui/material": "^5.16.6",
+    "aws-amplify": "^6.5.0",
     "axios": "^1.7.3",
     "draft-js": "^0.11.7",
     "formik": "^2.4.6",
@@ -19,6 +23,7 @@
     "react-dom": "^18.2.0",
     "react-quill": "^2.0.0",
     "react-router-dom": "^6.26.0",
+    "react-tag-input": "^6.10.3",
     "styled-components": "^6.1.12"
   },
   "devDependencies": {

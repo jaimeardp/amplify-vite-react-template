@@ -1,4 +1,4 @@
-body {
+/* body {
   margin: 0;
   background: linear-gradient(180deg, rgb(117, 81, 194), rgb(255, 255, 255));
   display: flex;
@@ -27,9 +27,11 @@ button {
   transition: border-color 0.25s;
   color: white;
 }
+
 button:hover {
   border-color: #646cff;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
@@ -62,4 +64,56 @@ li:hover {
 a {
   font-weight: 800;
   text-decoration: none;
+} */
+
+.tags-input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  background-color: #f9f9f9;
+}
+
+.form-tags {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+  width: 100%;
+}
+
+.form-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 0.4rem;
+  background-color: #e9ecef;
+  margin-bottom: 0.5rem;
+  margin: 0.25rem;
+}
+
+.form-tag-remove {
+  cursor: pointer;
+  margin-left: 0.5rem;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.tag-input-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.tag-input {
+  width: 50%;
+  max-width: 400px;
+}
+
+
+.form-tag-clear-all {
+  margin-top: 10px;
 }
