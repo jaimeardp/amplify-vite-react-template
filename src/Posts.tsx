@@ -39,6 +39,13 @@ const PostsComponent = () => {
         // setPosts(posts);
       },
     });
+    // client.models.Post.list().then((items) => {
+    //   console.log('Posts wit list method:');
+    //   console.log(items.data);
+
+    //   setPosts([...items.data])
+
+    // } );
 
   }, []);
 
