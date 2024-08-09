@@ -101,7 +101,7 @@ const PostsComponent = () => {
       <div className= "row mb-2">
 
         {posts.map((post: any) => (
-          <div className="card" style={{ width: '18rem' }}>
+          <div className="card mb-4 m-4" style={{ width: '18rem' }}>
             <img src={post.file} className="card-img-top" alt="..." />
             <div className="card-body">
               <h5 className="card-title">{post.title}</h5>
