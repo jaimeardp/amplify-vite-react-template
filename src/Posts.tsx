@@ -5,6 +5,7 @@ import { generateClient } from "aws-amplify/data";
 import type { Schema } from "../amplify/data/resource";
 
 import { getUrl } from 'aws-amplify/storage';
+import { Link, useNavigate } from "react-router-dom";
 
 
 const client = generateClient<Schema>();
@@ -51,6 +52,8 @@ const PostsComponent = () => {
   
   const [posts, setPosts] = useState<Array<Schema["Post"]["type"]>>([]);
 
+  const navigate = useNavigate();
+
   useEffect( () => {
     // client.models.Post.observeQuery().subscribe({
     //   next: (data) => {
@@ -93,6 +96,12 @@ const PostsComponent = () => {
 
   }, []);
 
+  const handleNavigate = (post: any) => {
+    console.log('Navigating to post:');
+    console.log(post);
+    navigate(`/post/${post.id}`, { state: { post } });
+  };
+
 
   return (
 
@@ -108,7 +117,10 @@ const PostsComponent = () => {
               <p className="card-text">
                 Some quick example text to build on the card title and make up the bulk of the card's content.
               </p>
-              <a href="#" className="btn btn-primary">Go somewhere</a>
+              <a className="btn btn-primary"onClick={() => handleNavigate(post)}>Go somewhere</a>
+              {/* <button onClick={() => handleNavigate(post)} className="btn btn-primary">Go somewhere</button> */}
+
+              {/* <Link to={`/post/${post.id}`} className="btn btn-primary">Go somewhere</Link> */}
               <div className="mt-3">
                 {post.tags && post.tags.map((tag:string, index:any) => (
                   <span key={index} className="badge bg-primary me-1">{tag}</span>

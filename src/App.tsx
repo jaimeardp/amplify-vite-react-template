@@ -4,9 +4,14 @@
 // // import { Authenticator } from '@aws-amplify/ui-react';
 
 import GenPostCompoenent from "./GenPost";
+import HeaderComponent from "./HeaderComponent";
+import NavigationComponent from "./NavigationComponent";
+import PostDetail from "./PostDetail";
 import PostsComponent from "./Posts";
 
 // const client = generateClient<Schema>();
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
 
 function App() {
   // const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
@@ -38,12 +43,25 @@ function App() {
           Review next step of this tutorial.
         </a>
       </div> */}
+      {/* <HeaderComponent title="My Blog"/>
+      <NavigationComponent title="My Blog"/>
       <section className="row">
         <GenPostCompoenent/>
       </section>
       <section className="row">
         <PostsComponent/>
-      </section>
+      </section> */}
+
+      <Router>
+        <HeaderComponent title="My Blog"/>
+        <NavigationComponent title="My Blog"/>
+        <Routes>
+          <Route path="/" element={<PostsComponent />} />
+          <Route path="/post/:id" element={<PostDetail />} />
+          <Route path="/post/create" element={<GenPostCompoenent />} />
+
+        </Routes>
+      </Router>
 
     </div>
   );
