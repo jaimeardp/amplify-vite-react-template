@@ -12,6 +12,13 @@ const schema = a.schema({
       content: a.string(),
     })
     .authorization((allow) => [allow.publicApiKey()]),
+    Tag: a
+    .model({
+      id: a.string().required(),
+      text: a.string().required(),
+      className: a.string().required(),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
     Post: a
     .model({
       title: a.string().required(),
@@ -20,13 +27,7 @@ const schema = a.schema({
       tags: a.ref('Tag').array().required(),
     })
     .authorization((allow) => [allow.publicApiKey()]),
-    Tag: a
-    .model({
-      id: a.string().required(),
-      text: a.string().required(),
-      className: a.string().required(),
-    })
-    .authorization((allow) => [allow.publicApiKey()]),
+
 });
 
 export type Schema = ClientSchema<typeof schema>;
