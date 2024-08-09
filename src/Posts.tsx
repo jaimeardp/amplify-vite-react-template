@@ -31,7 +31,7 @@ const getUrlForPost = async (keyImage: string) => {
       // Alternatively, path: ({identityId}) => `album/{identityId}/1.jpg`
       options: {
         validateObjectExistence: false,  // defaults to false
-        expiresIn: 20 // validity of the URL, in seconds. defaults to 900 (15 minutes) and maxes at 3600 (1 hour)
+        expiresIn: 3600 // validity of the URL, in seconds. defaults to 900 (15 minutes) and maxes at 3600 (1 hour)
       },
     });
     console.log('signed URL: ', linkToStorageFile.url);
