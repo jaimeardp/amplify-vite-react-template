@@ -4,7 +4,7 @@ import { generateClient } from "aws-amplify/data";
 
 import type { Schema } from "../amplify/data/resource";
 
-// import { getUrl } from 'aws-amplify/storage';
+import { getUrl } from 'aws-amplify/storage';
 
 
 const client = generateClient<Schema>();
@@ -23,6 +23,28 @@ const client = generateClient<Schema>();
 //   return `profile_${shortBase64Title}_${tagsString}.jpg`;
 // }
 
+const getUrlForPost = async (keyImage: string) => {
+
+  try {
+    const linkToStorageFile = await getUrl({
+      path: `profile/${keyImage}`, // the path to the image in storage
+      // Alternatively, path: ({identityId}) => `album/{identityId}/1.jpg`
+      options: {
+        validateObjectExistence: false,  // defaults to false
+        expiresIn: 20 // validity of the URL, in seconds. defaults to 900 (15 minutes) and maxes at 3600 (1 hour)
+      },
+    });
+    console.log('signed URL: ', linkToStorageFile.url);
+    console.log('URL expires at: ', linkToStorageFile.expiresAt); 
+
+    return linkToStorageFile.url.toString();
+
+  } catch (error) {
+    console.log('Error : ', error);
+  }
+
+};
+
 
 
 const PostsComponent = () => {
@@ -30,15 +52,15 @@ const PostsComponent = () => {
   const [posts, setPosts] = useState<Array<Schema["Post"]["type"]>>([]);
 
   useEffect( () => {
-    client.models.Post.observeQuery().subscribe({
-      next: (data) => {
-        console.log('Posts:');
-        console.log(data.items);
+    // client.models.Post.observeQuery().subscribe({
+    //   next: (data) => {
+    //     console.log('Posts:');
+    //     console.log(data.items);
 
-        setPosts([...data.items])
-        // setPosts(posts);
-      },
-    });
+    //     setPosts([...data.items])
+    //     // setPosts(posts);
+    //   },
+    // });
     // client.models.Post.list().then((items) => {
     //   console.log('Posts wit list method:');
     //   console.log(items.data);
@@ -46,6 +68,28 @@ const PostsComponent = () => {
     //   setPosts([...items.data])
 
     // } );
+    
+  const fetchPosts = async () => {
+    try {
+      const posts = await client.models.Post.list();
+      console.log('Posts:');
+      console.log(posts.data);
+      const postsAdded = await Promise.all(posts.data.map( async (post) => {
+        const imageUrl = await getUrlForPost(post.file);
+        post.file = imageUrl? imageUrl : post.file;
+        console.log('Post:');
+        console.log(post);
+        return post;
+      }));
+      console.log('Posts New!:');
+      console.log(postsAdded);
+      // setPosts([...posts.data]);
+      setPosts([...postsAdded]);
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+    }
+  };
+  fetchPosts();
 
   }, []);
 
