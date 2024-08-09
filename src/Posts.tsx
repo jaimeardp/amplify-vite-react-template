@@ -27,7 +27,7 @@ const getUrlForPost = async (keyImage: string) => {
 
   try {
     const linkToStorageFile = await getUrl({
-      path: `profile/${keyImage}`, // the path to the image in storage
+      path: `${keyImage}`, // the path to the image in storage
       // Alternatively, path: ({identityId}) => `album/{identityId}/1.jpg`
       options: {
         validateObjectExistence: false,  // defaults to false
