@@ -104,8 +104,12 @@ const PostsComponent = () => {
             <div className="ql-snow col-md-6" key={post.id}>
               <div className="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                 <div className="col p-4 d-flex flex-column position-static">
-                  <strong className="d-inline-block mb-2 text-primary">World</strong>
-                  <h3 className="mb-0"> {post.title} </h3>
+                
+                {post.tags.map((tag:string, index:any) => (
+                    <strong key={index} className="d-inline-block mb-2 text-primary">
+                      {tag}
+                    </strong>
+                  ))}                  <h3 className="mb-0"> {post.title} </h3>
                   <div className="mb-1 text-muted"> {post.createdAt} </div>
                   <p className="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
                   <a href="#" className="stretched-link">Continue reading</a>
