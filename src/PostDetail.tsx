@@ -19,6 +19,13 @@ const PostDetail: React.FC = () => {
   return (
     <div className='container'>
       <h1>{post.title}</h1>
+      <br/>
+      <div>
+        {post.tags.map((tag:string, index:any) => (
+          <span key={index} className="badge bg-primary me-1">{tag}</span>
+        ))}
+      </div>
+      <br/>
       <img src={post.file} alt={post.title} />
       <p>Created at: {new Date(post.createdAt).toLocaleDateString()}</p>
       <div>
