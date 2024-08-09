@@ -23,47 +23,33 @@ const client = generateClient<Schema>();
 //   return `profile_${shortBase64Title}_${tagsString}.jpg`;
 // }
 
-// const getUrlForPost = async (keyImage: string) => {
 
-//   try {
-//     const linkToStorageFile = await getUrl({
-//       path: `profile/${keyImage}`, // the path to the image in storage
-//       // Alternatively, path: ({identityId}) => `album/{identityId}/1.jpg`
-//       options: {
-//         validateObjectExistence: false,  // defaults to false
-//         expiresIn: 20 // validity of the URL, in seconds. defaults to 900 (15 minutes) and maxes at 3600 (1 hour)
-//       },
-//     });
-//     console.log('signed URL: ', linkToStorageFile.url);
-//     console.log('URL expires at: ', linkToStorageFile.expiresAt); 
 
-//     return linkToStorageFile.url;
-
-//   } catch (error) {
-//     console.log('Error : ', error);
-//   }
-
-// };
-
-function PostsComponent() {
+const PostsComponent = () => {
+  
   const [posts, setPosts] = useState<Array<Schema["Post"]["type"]>>([]);
 
-  useEffect(() => {
+  useEffect( () => {
     client.models.Post.observeQuery().subscribe({
       next: (data) => {
         console.log('Posts:');
         console.log(data.items);
+
         setPosts([...data.items])
+        // setPosts(posts);
       },
     });
+
   }, []);
+
+
   return (
 
     <main>
       <h1>Posts</h1>
       <div className= "row mb-2">
 
-        {posts.map((post) => (
+        {posts.map((post: any) => (
             <div className="ql-snow col-md-6" key={post.id}>
               <div className="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                 <div className="col p-4 d-flex flex-column position-static">
@@ -75,7 +61,7 @@ function PostsComponent() {
                 </div>
                 <div className="col-auto d-none d-lg-block">
                   {/* <svg className="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg> */}
-                  {/* <img src={getUrlForPost(generateFilename(post.title, post.tags.map(tag => tag.text)))} alt="..." /> */}
+                  <img src={ post.file } alt="..." />
                 </div>
               </div>
             </div>

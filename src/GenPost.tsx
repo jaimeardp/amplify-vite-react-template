@@ -9,7 +9,7 @@ import '@aws-amplify/ui-react/styles.css';
 import type { Schema } from "../amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
 
-import { uploadData } from 'aws-amplify/storage';
+import { uploadData, getUrl } from 'aws-amplify/storage';
 
 
 // const uploadAvatar = async (postContent: FormValues) => {
@@ -53,10 +53,35 @@ interface PostType {
 //   file: File;
 // }
 
+const getUrlForPost = async (keyImage: string) => {
+
+  try {
+    const linkToStorageFile = await getUrl({
+      path: `profile/${keyImage}`, // the path to the image in storage
+      // Alternatively, path: ({identityId}) => `album/{identityId}/1.jpg`
+      options: {
+        validateObjectExistence: false,  // defaults to false
+        expiresIn: 20 // validity of the URL, in seconds. defaults to 900 (15 minutes) and maxes at 3600 (1 hour)
+      },
+    });
+    console.log('signed URL: ', linkToStorageFile.url);
+    console.log('URL expires at: ', linkToStorageFile.expiresAt); 
+
+    return linkToStorageFile.url.toString();
+
+  } catch (error) {
+    console.log('Error : ', error);
+  }
+
+};
+
 
 const createPost = async (postContent: PostType) => {
   try {
+    console.log('Creating post...');
     console.log(postContent);
+    const imageUrl = await getUrlForPost(postContent.file);
+    postContent.file = imageUrl? imageUrl : postContent.file;
     const res = await client.models.Post.create(postContent);
     console.log(res);
   } catch (error) {
