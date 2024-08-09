@@ -24,7 +24,8 @@ const schema = a.schema({
       title: a.string().required(),
       content: a.string().required(),
       file: a.string().required(),
-      tags: a.ref('Tag').array().required(),
+      // tags: a.ref('Tag').array().required(),
+      tags: a.string().array().required(),
     })
     .authorization((allow) => [allow.publicApiKey()]),
 

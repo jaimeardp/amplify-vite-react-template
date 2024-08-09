@@ -41,12 +41,12 @@ interface Tag {
   className: string;
 }
 
-// interface FormValues {
-//   title: string;
-//   content: string;
-//   file: string;
-//   tags: string[];
-// }
+interface PostType {
+  title: string;
+  content: string;
+  file: string;
+  tags: string[];
+}
 
 // interface LanndingImage {
 //   name: string;
@@ -54,7 +54,7 @@ interface Tag {
 // }
 
 
-const createPost = async (postContent: any) => {
+const createPost = async (postContent: PostType) => {
   try {
     console.log(postContent);
     const res = await client.models.Post.create(postContent);
@@ -138,7 +138,7 @@ const GenPostCompoenent = () => {
 
           console.log('Succeeded: ', result);
 
-          values.tags = tags;
+          values.tags = tags.map(tag => tag.text);
 
           values.file = result.path;
             
