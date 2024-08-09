@@ -12,6 +12,38 @@ import { generateClient } from "aws-amplify/data";
 import { uploadData,  } from 'aws-amplify/storage';
 
 
+// const FontAttributor = ReactQuill.Quill.import('attributors/class/font');
+// FontAttributor.whitelist = [
+//   'sofia',
+//   'slabo',
+//   'roboto',
+//   'inconsolata',
+//   'ubuntu',
+// ];
+// ReactQuill.Quill.register(FontAttributor, true);
+
+// const Font = ReactQuill.Quill.import('formats/font');
+// Font.whitelist = ['Roboto', 'Sans-Serif', 'Serif', 'Monospace', 'Open Sans'];
+// ReactQuill.Quill.register(Font, true);
+
+// const Font = ReactQuill.Quill.import('formats/font');
+// console.log(Font);
+// Font.whitelist = ['Ubuntu', 'raleway', 'Roboto', 'oswald', 'Merriweather', 'Serif', 'Sans-Serif', 'Monospace'];
+// ReactQuill.Quill.register(Font, true);
+
+const Quill = ReactQuill.Quill;
+
+const FontAttributor = Quill.import('formats/font');
+console.log(FontAttributor);
+FontAttributor.whitelist = [
+  'Roboto',
+  'Sans-Serif',
+  'monospace',
+  'serif',
+];
+Quill.register(FontAttributor, true);
+
+// console.log(Quill.toString());
 
 // const uploadAvatar = async (postContent: FormValues) => {
 //   try {
@@ -137,6 +169,7 @@ const GenPostCompoenent = () => {
       setTags([]);
   };
 
+
   // Upload
 
   // const handleChange = (event: any) => {
@@ -199,7 +232,7 @@ const GenPostCompoenent = () => {
                 }}
                 modules={{
                   toolbar: [
-                    [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+                    [{ 'header': '1' }, { 'header': '2' }, { 'font': FontAttributor.whitelist }],
                     [{ 'list': 'ordered' }, { 'list': 'bullet' }],
                     ['bold', 'italic', 'underline', 'strike', 'blockquote'],
                     [{ 'script': 'sub' }, { 'script': 'super' }],
