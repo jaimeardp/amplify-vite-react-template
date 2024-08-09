@@ -101,25 +101,24 @@ const PostsComponent = () => {
       <div className= "row mb-2">
 
         {posts.map((post: any) => (
-            <div className="ql-snow col-md-6" key={post.id}>
-              <div className="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <div className="col p-4 d-flex flex-column position-static">
-                
-                {post.tags.map((tag:string, index:any) => (
-                    <strong key={index} className="d-inline-block mb-2 text-primary">
-                      {tag}
-                    </strong>
-                  ))}                  <h3 className="mb-0"> {post.title} </h3>
-                  <div className="mb-1 text-muted"> {post.createdAt} </div>
-                  <p className="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                  <a href="#" className="stretched-link">Continue reading</a>
-                </div>
-                <div className="col-auto d-none d-lg-block">
-                  {/* <svg className="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg> */}
-                  <img src={ post.file } alt="..."  className="card-img-top"  style={{ maxWidth: '100%', maxHeight: '200px', objectFit: 'cover' }}/>
-                </div>
+          <div className="card" style={{ width: '18rem' }}>
+            <img src={post.file} className="card-img-top" alt="..." />
+            <div className="card-body">
+              <h5 className="card-title">{post.title}</h5>
+              <p className="card-text">
+                Some quick example text to build on the card title and make up the bulk of the card's content.
+              </p>
+              <a href="#" className="btn btn-primary">Go somewhere</a>
+              <div className="mt-3">
+                {post.tags && post.tags.map((tag:string, index:any) => (
+                  <span key={index} className="badge bg-primary me-1">{tag}</span>
+                ))}
+              </div>
+              <div className="mt-2 text-muted">
+                <small>Created at: {new Date(post.createdAt).toLocaleDateString()}</small>
               </div>
             </div>
+          </div>
           ))}
 
       </div>
