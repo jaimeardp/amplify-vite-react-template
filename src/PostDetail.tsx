@@ -1,8 +1,10 @@
 import React from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+// import { useParams, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+
 
 const PostDetail: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+//   const { id } = useParams<{ id: string }>();
   const location = useLocation();
   const { post } = location.state as { post: any };
 
