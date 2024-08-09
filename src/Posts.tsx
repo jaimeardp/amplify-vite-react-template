@@ -4,14 +4,57 @@ import { generateClient } from "aws-amplify/data";
 
 import type { Schema } from "../amplify/data/resource";
 
+// import { getUrl } from 'aws-amplify/storage';
+
+
 const client = generateClient<Schema>();
+
+// function generateFilename(title: string, tags: string[]): string {
+//   // Convert the title to a base64-encoded string
+//   const base64Title = Buffer.from(title).toString('base64');
+  
+//   // Use a short version of the base64 string (e.g., take the first 10 characters)
+//   const shortBase64Title = base64Title.slice(0, 10);
+  
+//   // Concatenate the short base64 title with the tags
+//   const tagsString = tags.join('_');
+  
+//   // Return the new filename
+//   return `profile_${shortBase64Title}_${tagsString}.jpg`;
+// }
+
+// const getUrlForPost = async (keyImage: string) => {
+
+//   try {
+//     const linkToStorageFile = await getUrl({
+//       path: `profile/${keyImage}`, // the path to the image in storage
+//       // Alternatively, path: ({identityId}) => `album/{identityId}/1.jpg`
+//       options: {
+//         validateObjectExistence: false,  // defaults to false
+//         expiresIn: 20 // validity of the URL, in seconds. defaults to 900 (15 minutes) and maxes at 3600 (1 hour)
+//       },
+//     });
+//     console.log('signed URL: ', linkToStorageFile.url);
+//     console.log('URL expires at: ', linkToStorageFile.expiresAt); 
+
+//     return linkToStorageFile.url;
+
+//   } catch (error) {
+//     console.log('Error : ', error);
+//   }
+
+// };
 
 function PostsComponent() {
   const [posts, setPosts] = useState<Array<Schema["Post"]["type"]>>([]);
 
   useEffect(() => {
     client.models.Post.observeQuery().subscribe({
-      next: (data) => setPosts([...data.items]),
+      next: (data) => {
+        console.log('Posts:');
+        console.log(data.items);
+        setPosts([...data.items])
+      },
     });
   }, []);
   return (
@@ -31,8 +74,8 @@ function PostsComponent() {
                   <a href="#" className="stretched-link">Continue reading</a>
                 </div>
                 <div className="col-auto d-none d-lg-block">
-                  <svg className="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-
+                  {/* <svg className="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg> */}
+                  {/* <img src={getUrlForPost(generateFilename(post.title, post.tags.map(tag => tag.text)))} alt="..." /> */}
                 </div>
               </div>
             </div>

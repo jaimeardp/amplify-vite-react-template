@@ -6,8 +6,8 @@ import 'react-quill/dist/quill.snow.css'; // import styles
 // import { StorageManager } from '@aws-amplify/ui-react-storage';
 import '@aws-amplify/ui-react/styles.css';
 
-// import type { Schema } from "../amplify/data/resource";
-// import { generateClient } from "aws-amplify/data";
+import type { Schema } from "../amplify/data/resource";
+import { generateClient } from "aws-amplify/data";
 
 import { uploadData } from 'aws-amplify/storage';
 
@@ -32,7 +32,7 @@ import { uploadData } from 'aws-amplify/storage';
 
 import TagInputComponent from "./TagInputComponent";
 
-// const client = generateClient<Schema>();
+const client = generateClient<Schema>();
 
 // Define the Tag interface
 interface Tag {
@@ -44,8 +44,8 @@ interface Tag {
 // interface FormValues {
 //   title: string;
 //   content: string;
-//   file?: File;
-//   tags: Tag[];
+//   file: string;
+//   tags: string[];
 // }
 
 // interface LanndingImage {
@@ -54,16 +54,42 @@ interface Tag {
 // }
 
 
-// const createPost = async (postContent: FormValues) => {
-//   try {
-//     console.log(postContent);
-//     // const res = await client.models.Post.create(postContent);
-//     // console.log(res);
-//   } catch (error) {
-//     console.error('Error creating post:', error);
-//   }
-// };
+const createPost = async (postContent: any) => {
+  try {
+    console.log(postContent);
+    const res = await client.models.Post.create(postContent);
+    console.log(res);
+  } catch (error) {
+    console.error('Error creating post:', error);
+  }
+};
 
+function toBase64(str: string): string {
+  if (typeof window !== 'undefined' && window.btoa) {
+    return window.btoa(str);
+  } else if (typeof Buffer !== 'undefined') {
+    return Buffer.from(str).toString('base64');
+  } else {
+    throw new Error('No method available to encode to base64');
+  }
+}
+
+function generateFilename(title: string, tags: string[]): string {
+  // Convert the title to a base64-encoded string
+  const base64Title = toBase64(title);  
+  // Use a short version of the base64 string (e.g., take the first 10 characters)
+  const shortBase64Title = base64Title.slice(0, 10);
+  
+  // Concatenate the short base64 title with the tags
+  const tagsString = tags.join('_');
+  
+  // Return the new filename
+  return `profile_${shortBase64Title}_${tagsString}`;
+}
+function getTagNames(tags: Tag[]): string[] {
+  // Map over the tags array and extract the name property
+  return tags.map(tag => tag.text);
+}
 
 const GenPostCompoenent = () => {
   const [content, setContent] = useState('');
@@ -97,13 +123,15 @@ const GenPostCompoenent = () => {
       <h1>Create Article</h1>
       <Formik
         initialValues={{ title: '', content: '', tags: [] as Tag[] }}
-        onSubmit={ async (values) => {
+        onSubmit={ async (values: any) => {
           // handle form submission
           console.log(values);
           console.log(tags);
 
+          const keyFileName =  `profile/${generateFilename(values.title, getTagNames(tags))}.jpg`
+
           const result = await uploadData({
-            path: "profile/profile3.jpg",
+            path: keyFileName,
             // Alternatively, path: ({identityId}) => `album/${identityId}/1.jpg`
             data: fileImage? fileImage : new File([""], "filename"),
           }).result;
@@ -111,8 +139,10 @@ const GenPostCompoenent = () => {
           console.log('Succeeded: ', result);
 
           values.tags = tags;
+
+          values.file = result.path;
             
-          // createPost(values);
+          await createPost(values);
         }}
       >
         {({ setFieldValue }) => (

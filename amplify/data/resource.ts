@@ -12,10 +12,19 @@ const schema = a.schema({
       content: a.string(),
     })
     .authorization((allow) => [allow.publicApiKey()]),
-  Post: a
+    Post: a
     .model({
-      title : a.string(),
-      content: a.string(),
+      title: a.string().required(),
+      content: a.string().required(),
+      file: a.string().required(),
+      tags: a.ref('Tag').array().required(),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
+    Tag: a
+    .model({
+      id: a.string().required(),
+      text: a.string().required(),
+      className: a.string().required(),
     })
     .authorization((allow) => [allow.publicApiKey()]),
 });
