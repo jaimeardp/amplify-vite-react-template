@@ -153,7 +153,7 @@ const GenPostCompoenent = () => {
           console.log(values);
           console.log(tags);
 
-          const keyFileName =  `profile/${generateFilename(values.title, getTagNames(tags))}.jpg`
+          const keyFileName =  `${generateFilename(values.title, getTagNames(tags))}.jpg`
 
           const result = await uploadData({
             path: keyFileName,
