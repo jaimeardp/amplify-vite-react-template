@@ -58,22 +58,6 @@ const PostsComponent = () => {
   const navigate = useNavigate();
 
   useEffect( () => {
-    // client.models.Post.observeQuery().subscribe({
-    //   next: (data) => {
-    //     console.log('Posts:');
-    //     console.log(data.items);
-
-    //     setPosts([...data.items])
-    //     // setPosts(posts);
-    //   },
-    // });
-    // client.models.Post.list().then((items) => {
-    //   console.log('Posts wit list method:');
-    //   console.log(items.data);
-
-    //   setPosts([...items.data])
-
-    // } );
     
   const fetchPosts = async () => {
     try {
@@ -81,8 +65,8 @@ const PostsComponent = () => {
       console.log('Posts:');
       console.log(posts.data);
       const postsAdded = await Promise.all(posts.data.map( async (post) => {
-        const imageUrl = await getUrlForPost(post.file);
-        post.file = imageUrl? imageUrl : post.file;
+        const imageUrlAbs = await getUrlForPost(post.imageUrl? post.imageUrl : '');
+        post.imageUrl = imageUrlAbs? imageUrlAbs : post.imageUrl;
         console.log('Post:');
         console.log(post);
         return post;

@@ -11,8 +11,8 @@ export const schema = a.schema({
     .model({
       title: a.string().required(),
       content: a.string().required(),
-      createdAt: a.datetime().required(),
-      updatedAt: a.datetime().required(),
+      createdAt: a.datetime(),
+      updatedAt: a.datetime(),
       imageUrl: a.string(),
       tags: a.hasMany("Tag", "postId"), // setup relationships between types
       views: a.integer(),
@@ -24,7 +24,7 @@ export const schema = a.schema({
     .model({
       tagId: a.id().required(),
       name: a.string().required(),
-      className: a.string().required(),
+      className: a.string(),
       postId: a.id(),
       post: a.belongsTo("Post", "postId"), // setup relationships between types
     })
