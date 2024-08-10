@@ -11,7 +11,7 @@ import { generateClient } from "aws-amplify/data";
 
 import { uploadData,  } from 'aws-amplify/storage';
 
-
+// import { graphqlOperation } from '@aws-amplify/api-graphql';
 // const FontAttributor = ReactQuill.Quill.import('attributors/class/font');
 // FontAttributor.whitelist = [
 //   'sofia',
@@ -31,17 +31,17 @@ import { uploadData,  } from 'aws-amplify/storage';
 // Font.whitelist = ['Ubuntu', 'raleway', 'Roboto', 'oswald', 'Merriweather', 'Serif', 'Sans-Serif', 'Monospace'];
 // ReactQuill.Quill.register(Font, true);
 
-const Quill = ReactQuill.Quill;
+// const Quill = ReactQuill.Quill;
 
-const FontAttributor = Quill.import('formats/font');
-console.log(FontAttributor);
-FontAttributor.whitelist = [
-  'Roboto',
-  'Sans-Serif',
-  'monospace',
-  'serif',
-];
-Quill.register(FontAttributor, true);
+// const FontAttributor = Quill.import('formats/font');
+// console.log(FontAttributor);
+// FontAttributor.whitelist = [
+//   'Roboto',
+//   'Sans-Serif',
+//   'monospace',
+//   'serif',
+// ];
+// Quill.register(FontAttributor, true);
 
 // console.log(Quill.toString());
 
@@ -232,7 +232,7 @@ const GenPostCompoenent = () => {
                 }}
                 modules={{
                   toolbar: [
-                    [{ 'header': '1' }, { 'header': '2' }, { 'font': FontAttributor.whitelist }],
+                    [{ 'header': '1' }, { 'header': '2' }, { 'font': []}],
                     [{ 'list': 'ordered' }, { 'list': 'bullet' }],
                     ['bold', 'italic', 'underline', 'strike', 'blockquote'],
                     [{ 'script': 'sub' }, { 'script': 'super' }],
