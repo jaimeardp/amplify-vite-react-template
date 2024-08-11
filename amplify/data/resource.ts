@@ -1,20 +1,17 @@
 import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
 
-/*== STEP 1 ===============================================================
-The section below creates a Todo database table with a "content" field. Try
-adding a new "isDone" field as a boolean. The authorization rule below
-specifies that any user authenticated via an API key can "create", "read",
-"update", and "delete" any "Todo" records.
-=========================================================================*/
+import { sayHello } from "../functions/tagging-services/resources";
+
 export const schema = a.schema({
   Post: a
     .model({
+      postId: a.id().required(),
       title: a.string().required(),
       content: a.string().required(),
       createdAt: a.datetime(),
       updatedAt: a.datetime(),
       imageUrl: a.string(),
-      tags: a.hasMany("Tag", "postId"), // setup relationships between types
+      tags: a.hasMany("PostTag", "postId"), // Link to the PostTag relationship model
       views: a.integer(),
       shareds: a.integer(),
     })
@@ -25,10 +22,48 @@ export const schema = a.schema({
       tagId: a.id().required(),
       name: a.string().required(),
       className: a.string(),
-      postId: a.id(),
-      post: a.belongsTo("Post", "postId"), // setup relationships between types
+      posts: a.hasMany("PostTag", "tagId"), // Link to the PostTag relationship model
+      categories: a.hasMany("TagCategory", "tagId"), // Link to the TagCategory relationship model
     })
     .authorization((allow) => [allow.publicApiKey()]),
+
+  Category: a
+    .model({
+      categoryId: a.id().required(),
+      name: a.string().required(),
+      tags: a.hasMany("TagCategory", "categoryId"), // Link to the TagCategory relationship model
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
+
+  PostTag: a
+    .model({
+      postId: a.id().required(),
+      tagId: a.id().required(),
+      post: a.belongsTo("Post", "postId"),
+      tag: a.belongsTo("Tag", "tagId"),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
+
+  TagCategory: a
+    .model({
+      tagId: a.id().required(),
+      categoryId: a.id().required(),
+      tag: a.belongsTo("Tag", "tagId"),
+      category: a.belongsTo("Category", "categoryId"),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
+
+    
+  sayHello: a
+    .query()
+    .arguments({
+      tagsCreated: a.string().array().required(),
+      tags: a.string().array().required(),
+      categories: a.string().array().required()
+
+    })
+    .returns(a.string())
+    .handler(a.handler.function(sayHello)),
 });
 
 export type Schema = ClientSchema<typeof schema>;
@@ -37,39 +72,8 @@ export const data = defineData({
   schema,
   authorizationModes: {
     defaultAuthorizationMode: "apiKey",
-    // API Key is used for a.allow.public() rules
     apiKeyAuthorizationMode: {
       expiresInDays: 30,
     },
   },
 });
-
-
-/*== STEP 2 ===============================================================
-Go to your frontend source code. From your client-side code, generate a
-Data client to make CRUDL requests to your table. (THIS SNIPPET WILL ONLY
-WORK IN THE FRONTEND CODE FILE.)
-
-Using JavaScript or Next.js React Server Components, Middleware, Server 
-Actions or Pages Router? Review how to generate Data clients for those use
-cases: https://docs.amplify.aws/gen2/build-a-backend/data/connect-to-API/
-=========================================================================*/
-
-/*
-"use client"
-import { generateClient } from "aws-amplify/data";
-import type { Schema } from "@/amplify/data/resource";
-
-const client = generateClient<Schema>() // use this Data client for CRUDL requests
-*/
-
-/*== STEP 3 ===============================================================
-Fetch records from the database and use them in your frontend component.
-(THIS SNIPPET WILL ONLY WORK IN THE FRONTEND CODE FILE.)
-=========================================================================*/
-
-/* For example, in a React component, you can use this snippet in your
-  function's RETURN statement */
-// const { data: todos } = await client.models.Todo.list()
-
-// return <ul>{todos.map(todo => <li key={todo.id}>{todo.content}</li>)}</ul>
